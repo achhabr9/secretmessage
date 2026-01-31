@@ -3,56 +3,165 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Valentine?</title>
+  <title>Will you be my Valentine?</title>
+
   <style>
-    body { margin:0; min-height:100vh; display:grid; place-items:center; font-family:Arial,sans-serif; background:#ffd6e7; padding:24px; }
-    .card { width:min(520px,100%); background:#fff; border-radius:20px; padding:28px; text-align:center; box-shadow:0 10px 30px rgba(0,0,0,.15); }
-    .buttons { display:flex; gap:14px; justify-content:center; margin-bottom:18px; flex-wrap:wrap; }
-    button { border:none; padding:12px 22px; border-radius:999px; font-size:16px; cursor:pointer; }
-    .yes { background:#ff2d75; color:#fff; }
-    .no  { background:#222; color:#fff; }
-    #result { display:none; margin-top:16px; }
-    img { width:100%; max-height:320px; object-fit:cover; border-radius:14px; margin-top:12px; }
+    :root{
+      --pink:#ff2d75;
+      --bg1:#ffd6e7;
+      --bg2:#ffb3d1;
+      --text:#1f1f1f;
+    }
+
+    * { box-sizing: border-box; }
+
+    body{
+      margin:0;
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at top, var(--bg1), var(--bg2));
+      padding:24px;
+      color: var(--text);
+    }
+
+    .card{
+      width:min(640px, 100%);
+      background: rgba(255,255,255,.85);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,.7);
+      border-radius: 24px;
+      padding: 28px;
+      text-align:center;
+      box-shadow: 0 18px 60px rgba(0,0,0,.18);
+    }
+
+    h1{
+      margin: 0 0 8px;
+      font-size: clamp(28px, 4vw, 40px);
+      letter-spacing: -0.5px;
+    }
+
+    .subtitle{
+      margin: 0 0 18px;
+      font-size: 18px;
+      opacity: .85;
+    }
+
+    .buttons{
+      display:flex;
+      gap:14px;
+      justify-content:center;
+      flex-wrap:wrap;
+      margin: 14px 0 10px;
+    }
+
+    button{
+      border:none;
+      padding: 12px 22px;
+      border-radius: 999px;
+      font-size: 16px;
+      cursor:pointer;
+      box-shadow: 0 10px 24px rgba(0,0,0,.12);
+      transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease;
+      user-select:none;
+    }
+    button:hover{ transform: translateY(-1px); box-shadow: 0 14px 28px rgba(0,0,0,.14); }
+    button:active{ transform: translateY(1px); box-shadow: 0 8px 18px rgba(0,0,0,.12); }
+
+    .yes{ background: var(--pink); color:#fff; }
+    .no{ background:#222; color:#fff; opacity:.92; }
+
+    .result{
+      display:none;
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(0,0,0,.08);
+      animation: pop .18s ease;
+    }
+    @keyframes pop{
+      from{ transform: scale(.99); opacity: 0; }
+      to{ transform: scale(1); opacity: 1; }
+    }
+
+    .result h2{
+      margin: 0 0 8px;
+      font-size: 30px;
+    }
+
+    .result p{
+      margin: 0 0 12px;
+      font-size: 18px;
+      opacity: .9;
+    }
+
+    img{
+      width:100%;
+      max-height: 360px;
+      object-fit: cover;
+      border-radius: 18px;
+      border: 1px solid rgba(0,0,0,.06);
+    }
+
+    .hint{
+      margin-top: 12px;
+      font-size: 13px;
+      opacity: .65;
+    }
   </style>
 </head>
+
 <body>
   <div class="card">
     <h1>Will you be my Valentine? 💘</h1>
-    <p>One question. Two buttons.</p>
+    <p class="subtitle">One question. Two buttons.</p>
 
     <div class="buttons">
-      <button class="yes" id="yesBtn">Yes</button>
-      <button class="no" id="noBtn">No</button>
+      <button class="yes" id="yesBtn">Yes 💖</button>
+      <button class="no" id="noBtn">No 🙃</button>
     </div>
 
-    <div id="result">
+    <div class="result" id="result">
       <h2 id="resultTitle"></h2>
       <p id="resultText"></p>
       <img id="resultImg" alt="result image">
+      <div class="hint">If the image doesn’t show, double-check the file names: <b>yes.jpg</b> and <b>no.jpg</b>.</div>
     </div>
   </div>
 
   <script>
+    // Put yes.jpg and no.jpg in the SAME folder as index.html in your GitHub repo
     var YES_IMAGE_URL = "yes.jpg";
     var NO_IMAGE_URL  = "no.jpg";
 
-    var result = document.getElementById("result");
+    var result  = document.getElementById("result");
     var titleEl = document.getElementById("resultTitle");
     var textEl  = document.getElementById("resultText");
     var imgEl   = document.getElementById("resultImg");
 
-    document.getElementById("yesBtn").addEventListener("click", function () {
+    function show(kind) {
       result.style.display = "block";
-      titleEl.textContent = "YAYYYYY";
-      textEl.textContent  = "I love you";
-      imgEl.src = YES_IMAGE_URL;
-    });
 
-    document.getElementById("noBtn").addEventListener("click", function () {
-      result.style.display = "block";
-      titleEl.textContent = "OUCH";
-      textEl.textContent  = "Try again";
-      imgEl.src = NO_IMAGE_URL;
+      if (kind === "yes") {
+        titleEl.textContent = "YAYYYYY 💞";
+        textEl.textContent  = "I love you 😘";
+        imgEl.src = YES_IMAGE_URL;
+        imgEl.alt = "Yes image";
+      } else {
+        titleEl.textContent = "OUCH 😭";
+        textEl.textContent  = "u dont love me";
+        imgEl.src = NO_IMAGE_URL;
+        imgEl.alt = "No image";
+      }
+    }
+
+    document.getElementById("yesBtn").addEventListener("click", function () { show("yes"); });
+    document.getElementById("noBtn").addEventListener("click", function () { show("no"); });
+
+    // Helpful: if images fail, show a readable message instead of "broken image"
+    imgEl.addEventListener("error", function () {
+      textEl.textContent = "Image not found. Make sure the file is uploaded and named exactly yes.jpg / no.jpg (lowercase).";
     });
   </script>
 </body>
