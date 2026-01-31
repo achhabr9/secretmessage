@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valentine?</title>
+  <style>
+    body { margin:0; min-height:100vh; display:grid; place-items:center; font-family:Arial,sans-serif; background:#ffd6e7; padding:24px; }
+    .card { width:min(520px,100%); background:#fff; border-radius:20px; padding:28px; text-align:center; box-shadow:0 10px 30px rgba(0,0,0,.15); }
+    .buttons { display:flex; gap:14px; justify-content:center; margin-bottom:18px; flex-wrap:wrap; }
+    button { border:none; padding:12px 22px; border-radius:999px; font-size:16px; cursor:pointer; }
+    .yes { background:#ff2d75; color:#fff; }
+    .no  { background:#222; color:#fff; }
+    #result { display:none; margin-top:16px; }
+    img { width:100%; max-height:320px; object-fit:cover; border-radius:14px; margin-top:12px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Will you be my Valentine? 💘</h1>
+    <p>One question. Two buttons.</p>
+
+    <div class="buttons">
+      <button class="yes" id="yesBtn">Yes</button>
+      <button class="no" id="noBtn">No</button>
+    </div>
+
+    <div id="result">
+      <h2 id="resultTitle"></h2>
+      <p id="resultText"></p>
+      <img id="resultImg" alt="result image">
+    </div>
+  </div>
+
+  <script>
+    var YES_IMAGE_URL = "yes.jpg";
+    var NO_IMAGE_URL  = "no.jpg";
+
+    var result = document.getElementById("result");
+    var titleEl = document.getElementById("resultTitle");
+    var textEl  = document.getElementById("resultText");
+    var imgEl   = document.getElementById("resultImg");
+
+    document.getElementById("yesBtn").addEventListener("click", function () {
+      result.style.display = "block";
+      titleEl.textContent = "YAYYYYY";
+      textEl.textContent  = "I love you";
+      imgEl.src = YES_IMAGE_URL;
+    });
+
+    document.getElementById("noBtn").addEventListener("click", function () {
+      result.style.display = "block";
+      titleEl.textContent = "OUCH";
+      textEl.textContent  = "Try again";
+      imgEl.src = NO_IMAGE_URL;
+    });
+  </script>
+</body>
+</html>
